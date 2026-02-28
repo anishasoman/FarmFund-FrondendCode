@@ -10,7 +10,13 @@ import {
   DropdownItem,
   DropdownDivider,
 } from "flowbite-react";
-import { ShoppingCart, LayoutDashboard, LogOut, Settings, Sprout } from "lucide-react";
+import {
+  ShoppingCart,
+  LayoutDashboard,
+  LogOut,
+  Settings,
+  Sprout,
+} from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast, Bounce } from "react-toastify";
 import { useState } from "react";
@@ -32,12 +38,10 @@ function Header() {
   const isLoggedIn = Boolean(user);
   const role = user?.role?.toLowerCase();
   const username = user?.username || "User";
-  
-
 
   const profileImage = user?.profile
-    // ? `${serverURL}/uploads/${user.profile}`
-     ? `${user.profile}`
+    ? // ? `${serverURL}/uploads/${user.profile}`
+      `${user.profile}`
     : null;
 
   const isActive = (path) => location.pathname === path;
@@ -54,47 +58,56 @@ function Header() {
     navigate("/login");
   };
 
-
   const getDashboardLink = () => {
     switch (role) {
-      case "investor": return "/investdashboard";
-      case "farmer": return "/farmer";
-      case "admin": return "/admin";
-      default: return "/";
+      case "investor":
+        return "/investdashboard";
+      case "farmer":
+        return "/farmer";
+      case "admin":
+        return "/admin";
+      default:
+        return "/";
     }
   };
 
   return (
     <header className="sticky top-0 z-50 shadow-sm">
-      <Navbar fluid rounded className="bg-[#FAF9F6] dark:bg-gray-900 px-4 py-3">
+      <Navbar
+        fluid
+        rounded
+        className="bg-[#FAF9F6] dark:bg-gray-900 px-3 sm:px-6 py-3"
+      >
         {/* BRAND */}
-        <NavbarBrand as={Link} to="/">
+        <NavbarBrand as={Link} to="/" className="flex items-center">
           <div className="flex items-center gap-2 group">
             <div className="bg-[#245b3e] p-2 rounded-xl transition-transform group-hover:rotate-12">
-              <Sprout size={20} className="text-white" />
+              <Sprout size={18} className="text-white sm:w-5 sm:h-5" />
             </div>
-            <span className="text-2xl font-bold tracking-tight">
+
+            <span className="text-lg sm:text-2xl font-bold tracking-tight whitespace-nowrap">
               <span className="text-[#245b3e] dark:text-green-400">Farm</span>
               <span className="text-yellow-400">Fund</span>
             </span>
           </div>
         </NavbarBrand>
 
-        {/* ACTIONS & USER PROFILE */}
-        <div className="flex items-center gap-3 md:order-2">
+        {/* RIGHT SIDE */}
+        <div className="flex items-center gap-2 sm:gap-3 md:order-2">
           <ThemeToggle />
 
           {isLoggedIn ? (
-            <div className="flex items-center gap-4">
-              {/* Action Icons */}
-
-              {(role === "investor" || role === "farmer" || role === "admin") && (
-                <Link 
-                  to={getDashboardLink()} 
+            <div className="flex items-center gap-2 sm:gap-4">
+              {/* Dashboard Icon */}
+              {(role === "investor" ||
+                role === "farmer" ||
+                role === "admin") && (
+                <Link
+                  to={getDashboardLink()}
                   title="Dashboard"
                   className="p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors"
                 >
-                  <LayoutDashboard className="w-6 h-6" />
+                  <LayoutDashboard className="w-5 h-5 sm:w-6 sm:h-6" />
                 </Link>
               )}
 
@@ -108,29 +121,36 @@ function Header() {
                     <img
                       src={profileImage}
                       alt="profile"
-                      className="w-10 h-10 rounded-full object-cover border-2 border-emerald-500 p-0.5"
+                      className="w-9 h-9 sm:w-10 sm:h-10 rounded-full object-cover border-2 border-emerald-500 p-0.5"
                     />
                   ) : (
-                    <div className="w-10 h-10 rounded-full bg-emerald-700 text-white flex items-center justify-center font-bold shadow-md hover:bg-emerald-800 transition-colors">
+                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-emerald-700 text-white flex items-center justify-center font-bold shadow-md hover:bg-emerald-800 transition-colors text-sm sm:text-base">
                       {username.charAt(0).toUpperCase()}
                     </div>
                   )
                 }
               >
                 <DropdownHeader className="px-4 py-3">
-                  <span className="block text-sm font-bold text-gray-900 dark:text-white">{username}</span>
-                  <span className="block truncate text-xs font-medium text-emerald-600 dark:text-emerald-400 capitalize">{role} Account</span>
+                  <span className="block text-sm font-bold text-gray-900 dark:text-white">
+                    {username}
+                  </span>
+                  <span className="block truncate text-xs font-medium text-emerald-600 dark:text-emerald-400 capitalize">
+                    {role} Account
+                  </span>
                 </DropdownHeader>
 
-                <DropdownItem onClick={() => setOpenSettings(true)} icon={Settings}>
+                <DropdownItem
+                  onClick={() => setOpenSettings(true)}
+                  icon={Settings}
+                >
                   Account Settings
                 </DropdownItem>
 
                 <DropdownDivider />
 
-                <DropdownItem 
-                  className="text-red-600 dark:text-red-400 font-medium" 
-                  onClick={handleLogout} 
+                <DropdownItem
+                  className="text-red-600 dark:text-red-400 font-medium"
+                  onClick={handleLogout}
                   icon={LogOut}
                 >
                   Sign Out
@@ -142,29 +162,71 @@ function Header() {
               <Button as={Link} to="/login" color="gray" size="sm" pill>
                 Login
               </Button>
-              <Button as={Link} to="/register" className="bg-[#245b3e] hover:!bg-emerald-800" size="sm" pill>
+
+              <Button
+                as={Link}
+                to="/register"
+                size="sm"
+                pill
+                className="bg-[#245b3e] hover:!bg-emerald-800"
+              >
                 Get Started
               </Button>
             </div>
           )}
-          
-          <NavbarToggle className="ml-1" />
+
+          <NavbarToggle className="ml-1 sm:ml-2" />
         </div>
 
-        {/* NAVIGATION LINKS */}
+        {/* MOBILE + DESKTOP NAV LINKS */}
         <NavbarCollapse>
-          <NavbarLink as={Link} to="/" active={isActive("/")} className="text-base font-medium">
+          <NavbarLink
+            as={Link}
+            to="/"
+            active={isActive("/")}
+            className="text-base font-medium"
+          >
             Home
           </NavbarLink>
-          <NavbarLink as={Link} to="/working" active={isActive("/working")} className="text-base font-medium">
+
+          <NavbarLink
+            as={Link}
+            to="/working"
+            active={isActive("/working")}
+            className="text-base font-medium"
+          >
             How it works
           </NavbarLink>
-          <NavbarLink as={Link} to="/proposals" active={isActive("/proposals")} className="text-base font-medium">
+
+          <NavbarLink
+            as={Link}
+            to="/proposals"
+            active={isActive("/proposals")}
+            className="text-base font-medium"
+          >
             Invest
           </NavbarLink>
+
+          {/* Show Login/Register inside collapse on mobile */}
+          {!isLoggedIn && (
+            <div className="flex flex-col gap-2 mt-3 sm:hidden">
+              <Button as={Link} to="/login" color="gray" size="sm" pill>
+                Login
+              </Button>
+              <Button
+                as={Link}
+                to="/register"
+                size="sm"
+                pill
+                className="bg-[#245b3e] hover:!bg-emerald-800"
+              >
+                Get Started
+              </Button>
+            </div>
+          )}
         </NavbarCollapse>
       </Navbar>
-      
+
       {/* RENDER CORRECT DRAWER BASED ON ROLE */}
       {isLoggedIn && openSettings && (
         <>
@@ -181,7 +243,7 @@ function Header() {
             <SettingsDrawer
               openSettings={openSettings}
               setOpenSettings={setOpenSettings}
-              userData={user} 
+              userData={user}
             />
           )}
 
@@ -196,7 +258,6 @@ function Header() {
         </>
       )}
     </header>
-
   );
 }
 
