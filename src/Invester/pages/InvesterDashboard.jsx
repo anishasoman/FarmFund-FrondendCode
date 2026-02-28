@@ -286,53 +286,60 @@ function InvestmentCard({
   const navigate = useNavigate();
 
   return (
-    <Card className="mb-4 hover:shadow-md transition dark:bg-gray-800">
-      <div className="flex gap-4 items-center">
-        {/* Image */}
-        <img
-          src={image}
-          onError={(e) => (e.target.src = "/no-image.png")}
-          className="w-24 h-24 object-cover rounded-lg"
-          alt={title}
-        />
+<Card className="mb-4 hover:shadow-md transition dark:bg-gray-800 p-4 sm:p-5">
+  <div className="flex flex-col sm:flex-row gap-4 sm:items-center">
 
-        {/* Content */}
-        <div className="flex-1">
-          <div className="flex justify-between items-start">
-            <h3 className="font-semibold dark:text-white">{title}</h3>
+    {/* Image */}
+    <img
+      src={image}
+      onError={(e) => (e.target.src = "/no-image.png")}
+      className="w-full sm:w-24 h-40 sm:h-24 object-cover rounded-lg"
+      alt={title}
+    />
 
-            {/* Eye Icon */}
-            <button
-              onClick={() => navigate(`/proposals/${proposalId}`)}
-              className="p-2 rounded-full hover:bg-green-100 dark:hover:bg-gray-700"
-              title="View Proposal"
-            >
-              <Eye className="w-5 h-5 text-green-700 dark:text-green-400" />
-            </button>
-          </div>
+    {/* Content */}
+    <div className="flex-1 w-full">
+      <div className="flex justify-between items-start gap-2">
+        <h3 className="font-semibold text-sm sm:text-base dark:text-white break-words">
+          {title}
+        </h3>
 
-          <div className="grid grid-cols-3 gap-4 mt-3 text-sm">
-            <div>
-              <p className="text-gray-500 dark:text-gray-400">Invested</p>
-              <p className="font-medium dark:text-white">{invested}</p>
-            </div>
+        {/* Eye Icon */}
+        <button
+          onClick={() => navigate(`/proposals/${proposalId}`)}
+          className="p-2 rounded-full hover:bg-green-100 dark:hover:bg-gray-700 flex-shrink-0"
+          title="View Proposal"
+        >
+          <Eye className="w-5 h-5 text-green-700 dark:text-green-400" />
+        </button>
+      </div>
 
-            <div>
-              <p className="text-gray-500 dark:text-gray-400">
-                Expected Return
-              </p>
-              <p className="text-green-600 font-medium">{returnRate}</p>
-            </div>
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-4 text-sm">
+        <div>
+          <p className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm">
+            Invested
+          </p>
+          <p className="font-medium dark:text-white">{invested}</p>
+        </div>
 
-            <div>
-              <p className="text-gray-500 dark:text-gray-400">Status</p>
-              <span className="bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300 px-2 py-0.5 rounded text-xs">
-                {status}
-              </span>
-            </div>
-          </div>
+        <div>
+          <p className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm">
+            Expected Return
+          </p>
+          <p className="text-green-600 font-medium">{returnRate}</p>
+        </div>
+
+        <div>
+          <p className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm">
+            Status
+          </p>
+          <span className="inline-block bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300 px-2 py-0.5 rounded text-xs">
+            {status}
+          </span>
         </div>
       </div>
-    </Card>
+    </div>
+  </div>
+</Card>
   );
 }
