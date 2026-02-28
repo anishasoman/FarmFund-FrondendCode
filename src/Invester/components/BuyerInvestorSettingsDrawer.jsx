@@ -45,7 +45,7 @@ export default function BuyerInvestorSettingsDrawer({
     });
 
     setPreview(
-      userData.profile ? `${serverURL}/uploads/${userData.profile}` : "",
+      userData.profile ? `${userData.profile}` : "",
     );
     setProfileFile(null);
   }, [userData]);
